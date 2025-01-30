@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hack:Idle</title>
+    <link rel="stylesheet" href="style.css"/>
+
+</head>
+    <body>
+        <div class="terminal">
+            <h2>Hack Idle - Main Interface</h2>
+            
+            <div class="section" style="display: flex; justify-content: space-between;">
+                <!-- Combat Section -->
+                <div style="width: 60%;">
+                    <h3>Combat Terminal</h3>
+                    <p><strong id="enemy-name">Please Choose a Region to Hack</strong></p>
+                    <p>SYS Integrity: <span id="player-health">80%</span> <span class="stat-bar"><span class="stat-bar-fill" id="player-health-bar" style="width: 80%;"></span></span></p>
+                    <p>Enemy Integrity: <span id="enemy-health">100%</span> <span class="stat-bar"><span class="stat-bar-fill" id="enemy-health-bar" style="width: 100%;"></span></span></p>
+                    <button class="button" onclick="startCombat()">Initiate Attack</button>
+                    <button class="button" onclick="useExploit()">Use Exploit</button>
+                    <button class="button" onclick="retreat()">Retreat</button>
+                    
+                    <p>Region: 
+                        <select id="region-select" onchange="selectEnemy(this.value)">
+                            <option value="East Square">East Square</option>
+                            <option value="Dark Alley">Dark Alley</option>
+                            <option value="Corporate HQ">Corporate HQ</option>
+                        </select>
+                    </p>
+                </div>
+                
+                <!-- Loot Section -->
+                <div style="width: 35%; border-left: 2px solid #00ff99; padding-left: 10px;">
+                    <h3>Loot Collected</h3>
+                    <ul id="loot-list">
+                        <li>No loot collected yet</li>
+                    </ul>
+                    <button class="button" onclick="autoLoot()">Auto Loot</button>
+                </div>
+            </div>
+            
+            <h1>Equip Items</h1>
+    
+            <!-- Equipment Slots -->
+            <div>
+                <div id="equip-head" class="equipment-slot" onmouseover="showTooltip('head')" onmouseout="hideTooltip()">Head: Empty Slot</div>
+                <div id="equip-chest" class="equipment-slot" onmouseover="showTooltip('chest')" onmouseout="hideTooltip()">Chest: Empty Slot</div>
+                <div id="equip-hands" class="equipment-slot" onmouseover="showTooltip('hands')" onmouseout="hideTooltip()">Hands: Empty Slot</div>
+                <div id="equip-legs" class="equipment-slot" onmouseover="showTooltip('legs')" onmouseout="hideTooltip()">Legs: Empty Slot</div>
+                <div id="equip-shoes" class="equipment-slot" onmouseover="showTooltip('shoes')" onmouseout="hideTooltip()">Shoes: Empty Slot</div>
+                <div id="equip-attachment1" class="equipment-slot" onmouseover="showTooltip('attachment1')" onmouseout="hideTooltip()">Attachment1: Empty Slot</div>
+                <div id="equip-attachment2" class="equipment-slot" onmouseover="showTooltip('attachment2')" onmouseout="hideTooltip()">Attachment2: Empty Slot</div>
+            </div>
+                
+            
+            
+            <div class="section">
+                <h3>Bot-Net Automation</h3>
+                <p>Active Bots: 3</p>
+                <ul>
+                    <li>Data Miner Bot - <strong>+5 Data/sec</strong></li>
+                    <li>Firewall Breaker - <strong>+2 Exploits/min</strong></li>
+                </ul>
+                <button class="button">Deploy New Bot</button>
+            </div>
+            
+            <div class="section">
+                <h3>Resource Pool</h3>
+                <p>Data Fragments: <strong>1,245</strong></p>
+                <p>Encryption Keys: <strong>18</strong></p>
+                <p>Malware Packets: <strong>7</strong></p>
+            </div>
+            
+            <div class="section">
+                <h3>Crafting Terminal</h3>
+                <p>Select a blueprint to craft a hacking tool.</p>
+                <button class="button">Craft Exploit Kit</button>
+                <button class="button">Upgrade Firewall Bypass</button>
+            </div>
+            
+            <div class="section">
+                <h3>Skills & Abilities</h3>
+                <p>Available Skill Points: <strong>3</strong></p>
+                <ul>
+                    <li><strong>Packet Injection</strong> - Increase attack speed by 10% <button class="button">Upgrade</button></li>
+                    <li><strong>Data Surge</strong> - Boost resource gain by 15% <button class="button">Upgrade</button></li>
+                    <li><strong>Firewall Evasion</strong> - Reduce enemy accuracy by 5% <button class="button">Upgrade</button></li>
+                </ul>
+            </div>
+        </div>
+        
+        <script src="combat.js"></script>
+        <script src="loot.js"></script>
+        <script src="playerStatsAndEquipment.js"></script>
+        <script src="main.js"></script>
+    </body>
+    </html>
+
+                  <!-- Button to start music
+    <button class="button" onclick="document.getElementById('backgroundMusic').play()">Play Music</button>
+    <button class="button" onclick="document.getElementById('backgroundMusic').pause()">Stop Music</button>
+
+     Adding background music
+    <audio id="backgroundMusic" loop>
+        <source src="Music/Neon Shadows.mp3" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio> -->

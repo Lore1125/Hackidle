@@ -1,0 +1,110 @@
+body {
+    background-color: #0a0a0a;
+    color: #00ff99;
+    font-family: monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-image: url("https://cdn.leonardo.ai/users/fe43a366-2a0c-46c3-a55a-fc191f2b7b0a/generations/a8da0d4e-d658-4889-81d1-b40738ddf067/Leonardo_Phoenix_10_A_futuristic_hightech_idle_hacker_game_bac_2.jpg");
+    background-size: cover;
+    background-position: center;
+}
+.terminal {
+    width: 80%;
+    max-width: 900px;
+    border: 2px solid #00ff99;
+    padding: 15px;
+    background-color: #000;
+    box-shadow: 0 0 10px #00ff99;
+}
+.section {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #00ff99;
+}
+.button {
+    background-color: #00ff99;
+    color: #000;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    margin: 5px;
+}
+.button:hover {
+    background-color: #00cc77;
+}
+.stat-bar {
+    background-color: #002b1f;
+    height: 10px;
+    margin-top: 5px;
+    width: 100%;
+    position: relative;
+}
+.stat-bar-fill {
+    background-color: #00ff99;
+    height: 100%;
+    width: 80%;
+}
+.matrix-text {
+    font-size: 12px;
+    color: #00ff99;
+    height: 50px;
+    overflow: hidden;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+}
+@keyframes scrollText {
+    0% { transform: translateY(100%); }
+    100% { transform: translateY(-100%); }
+}
+.scrolling-text {
+    animation: scrollText 5s linear infinite;
+}
+.equipment-slot {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid #00ff99;
+    cursor: pointer;
+    position: relative;
+}
+.tooltip {
+    display: none;
+    position: absolute;
+    background-color: #000;
+    color: #00ff99;
+    border: 1px solid #00ff99;
+    padding: 5px;
+    width: 150px;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: normal;
+}
+.equipment-slot:hover .tooltip {
+    display: block;
+}
+
+.equipment-slot {
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    width: 150px;
+    display: inline-block;
+}
+.inventory-item {
+    padding: 5px;
+    border: 1px solid #ccc;
+    margin: 5px;
+    cursor: pointer;
+}
+#tooltip {
+    position: absolute;
+    background-color: #fff;
+    border: 1px solid #000;
+    padding: 5px;
+    display: none;
+    z-index: 1000;
+}
