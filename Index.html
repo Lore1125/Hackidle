@@ -22,7 +22,7 @@
                     <button class="button" onclick="useExploit()">Use Exploit</button>
                     <button class="button" onclick="retreat()">Retreat</button>
                     
-                    <p>Region: 
+                    <p>Region: <span id="region-name">East Square</span>
                         <select id="region-select" onchange="selectEnemy(this.value)">
                             <option value="East Square">East Square</option>
                             <option value="Dark Alley">Dark Alley</option>
@@ -42,7 +42,7 @@
             </div>
             
             <h1>Equip Items</h1>
-    
+
             <!-- Equipment Slots -->
             <div>
                 <div id="equip-head" class="equipment-slot" onmouseover="showTooltip('head')" onmouseout="hideTooltip()">Head: Empty Slot</div>
@@ -52,6 +52,24 @@
                 <div id="equip-shoes" class="equipment-slot" onmouseover="showTooltip('shoes')" onmouseout="hideTooltip()">Shoes: Empty Slot</div>
                 <div id="equip-attachment1" class="equipment-slot" onmouseover="showTooltip('attachment1')" onmouseout="hideTooltip()">Attachment1: Empty Slot</div>
                 <div id="equip-attachment2" class="equipment-slot" onmouseover="showTooltip('attachment2')" onmouseout="hideTooltip()">Attachment2: Empty Slot</div>
+            </div>
+            <div class="equipment-controls">
+                <label for="slot-select">Equip to slot:</label>
+                <select id="slot-select">
+                    <option value="">Select a slot</option>
+                    <option value="head">Head</option>
+                    <option value="chest">Chest</option>
+                    <option value="hands">Hands</option>
+                    <option value="legs">Legs</option>
+                    <option value="shoes">Shoes</option>
+                    <option value="attachment1">Attachment 1</option>
+                    <option value="attachment2">Attachment 2</option>
+                </select>
+            </div>
+            <div id="tooltip" class="tooltip" role="status" aria-live="polite"></div>
+            <div class="section">
+                <h3>Inventory</h3>
+                <div id="inventory-list" class="inventory-container"></div>
             </div>
                 
             
@@ -91,6 +109,7 @@
             </div>
         </div>
         
+        <script src="gameState.js"></script>
         <script src="combat.js"></script>
         <script src="loot.js"></script>
         <script src="playerStatsAndEquipment.js"></script>

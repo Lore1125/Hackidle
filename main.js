@@ -1,12 +1,21 @@
-function showTooltip(slot) {
-    let item = player.equipment[slot];
-    let tooltipText = item && equipmentDatabase[item] ? equipmentDatabase[item].tooltip : "No item equipped.";
-    
-    let tooltip = document.getElementById("tooltip");
-    tooltip.textContent = tooltipText;
-    tooltip.style.display = "block";
-}
+(function () {
+    "use strict";
 
-function hideTooltip() {
-    document.getElementById("tooltip").style.display = "none";
-}
+    document.addEventListener("DOMContentLoaded", () => {
+        const regionSelect = document.getElementById("region-select");
+        if (regionSelect) {
+            regionSelect.value = "East Square";
+        }
+        const regionName = document.getElementById("region-name");
+        if (regionName) {
+            regionName.textContent = "East Square";
+        }
+        const enemyName = document.getElementById("enemy-name");
+        if (enemyName) {
+            enemyName.textContent = `Currently Battling: ${getEnemyName()}`;
+        }
+        updateUI();
+        displayInventory();
+        updateLootUI();
+    });
+})();

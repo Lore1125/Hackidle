@@ -9,52 +9,72 @@ const equipmentDatabase = {
     "Signal Booster": { attackPower: 2, defense: 2, tooltip: "Increases both attack and defense slightly." }
 };
 
+const allowedSlots = new Set(gameState.getAllowedEquipSlots());
+
 // Function to equip an item
 function equipItem(slot, itemName) {
-    if (equipmentDatabase[itemName]) {
-        player.equipment[slot] = itemName;
+    if (!equipmentDatabase[itemName]) return;
+    if (!allowedSlots.has(slot)) {
+        alert("Invalid slot. Please choose a valid equipment slot.");
+        return;
+    }
+
+    try {
+        gameState.setEquipment(slot, itemName);
         updatePlayerStats();
         updateEquipmentUI();
+    } catch (error) {
+        console.error("Failed to equip item", error);
     }
 }
 
 // Function to calculate player stats based on equipped items
 function updatePlayerStats() {
-    player.attackPower = player.baseStats.attackPower;
-    player.defense = player.baseStats.defense;
-    player.evasion = player.baseStats.evasion;
+    const playerSnapshot = gameState.getPlayerSnapshot();
+    let attackPower = playerSnapshot.baseStats.attackPower;
+    let defense = playerSnapshot.baseStats.defense;
+    let evasion = playerSnapshot.baseStats.evasion;
 
-    for (let slot in player.equipment) {
-        let item = player.equipment[slot];
+    const equipment = gameState.getEquipment();
+    for (const slot in equipment) {
+        const item = equipment[slot];
         if (item && equipmentDatabase[item]) {
-            let itemStats = equipmentDatabase[item];
-            player.attackPower += itemStats.attackPower || 0;
-            player.defense += itemStats.defense || 0;
-            player.evasion += itemStats.evasion || 0;
+            const itemStats = equipmentDatabase[item];
+            attackPower += itemStats.attackPower || 0;
+            defense += itemStats.defense || 0;
+            evasion += itemStats.evasion || 0;
         }
     }
+
+    gameState.setPlayerStats({ attackPower, defense, evasion });
 }
 
 // Function to update the UI for equipped items
 function updateEquipmentUI() {
-    for (let slot in player.equipment) {
-        let slotElement = document.getElementById(`equip-${slot}`);
+    const equipment = gameState.getEquipment();
+    for (const slot in equipment) {
+        const slotElement = document.getElementById(`equip-${slot}`);
         if (slotElement) {
-            let itemName = player.equipment[slot] || "Empty Slot";
-            slotElement.textContent = itemName;
+            const itemName = equipment[slot] || "Empty Slot";
+            slotElement.textContent = `${slot.charAt(0).toUpperCase() + slot.slice(1)}: ${itemName}`;
             slotElement.title = equipmentDatabase[itemName] ? equipmentDatabase[itemName].tooltip : "No item equipped.";
         }
     }
 }
 
-let inventory = ["Neural Uplink", "Encrypted Armor", "Ghost Touch Gloves", "Stealth Leggings", "Zero-Trace Boots", "Firewall Disruptor", "Signal Booster"];
-
 function showTooltip(slot) {
-    let item = player.equipment[slot];
-    let tooltipText = item && equipmentDatabase[item] ? equipmentDatabase[item].tooltip : "No item equipped.";
+    const equipment = gameState.getEquipment();
+    const item = equipment[slot];
+    const tooltipText = item && equipmentDatabase[item] ? equipmentDatabase[item].tooltip : "No item equipped.";
     
-    let tooltip = document.getElementById("tooltip");
+    const tooltip = document.getElementById("tooltip");
+    const slotElement = document.getElementById(`equip-${slot}`);
+    if (!tooltip || !slotElement) return;
+
+    const slotPosition = slotElement.getBoundingClientRect();
     tooltip.textContent = tooltipText;
+    tooltip.style.left = `${slotPosition.left + slotPosition.width / 2 + window.scrollX}px`;
+    tooltip.style.top = `${slotPosition.bottom + 8 + window.scrollY}px`;
     tooltip.style.display = "block";
 }
 
@@ -63,11 +83,11 @@ function hideTooltip() {
 }
 
 function displayInventory() {
-    let inventoryContainer = document.getElementById("inventory-list");
+    const inventoryContainer = document.getElementById("inventory-list");
     inventoryContainer.innerHTML = "";
     
-    inventory.forEach(item => {
-        let itemElement = document.createElement("div");
+    gameState.getInventory().forEach(item => {
+        const itemElement = document.createElement("div");
         itemElement.className = "inventory-item";
         itemElement.textContent = item;
         itemElement.onclick = () => selectItemToEquip(item);
@@ -76,12 +96,17 @@ function displayInventory() {
 }
 
 function selectItemToEquip(itemName) {
-    let equipSlot = prompt("Which slot would you like to equip this to? (head, chest, hands, legs, shoes, attachment1, attachment2)");
-    if (player.equipment[equipSlot] !== undefined) {
+    const equipSlot = document.getElementById("slot-select")?.value;
+    if (!equipSlot) {
+        alert("Please choose a slot before equipping an item.");
+        return;
+    }
+
+    if (allowedSlots.has(equipSlot)) {
         equipItem(equipSlot, itemName);
         displayInventory();
     } else {
-        alert("Invalid slot. Please enter a valid equipment slot.");
+        alert("Invalid slot. Please select a valid equipment slot from the dropdown.");
     }
 }
 
@@ -89,3 +114,4 @@ displayInventory();
 
 // Initialize UI on load
 updateEquipmentUI();
+updatePlayerStats();
