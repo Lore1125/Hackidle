@@ -19,12 +19,10 @@ const lootTables = {
     ]
 };
 
-let collectedLoot = [];
-
 // Function to roll for loot after a battle
 function generateLoot(enemyName) {
-    let lootList = lootTables[enemyName] || [];
-    let newLoot = [];
+    const lootList = lootTables[enemyName] || [];
+    const newLoot = [];
     
     lootList.forEach(loot => {
         if (Math.random() < loot.chance) {
@@ -36,17 +34,17 @@ function generateLoot(enemyName) {
         newLoot.push("Nothing found...");
     }
     
-    collectedLoot = [...collectedLoot, ...newLoot];
+    gameState.addLoot(newLoot);
     updateLootUI();
 }
 
 // Update the loot UI
 function updateLootUI() {
-    let lootListElement = document.getElementById("loot-list");
+    const lootListElement = document.getElementById("loot-list");
     lootListElement.innerHTML = "";
     
-    collectedLoot.forEach(item => {
-        let listItem = document.createElement("li");
+    gameState.getLoot().forEach(item => {
+        const listItem = document.createElement("li");
         listItem.textContent = item;
         lootListElement.appendChild(listItem);
     });
@@ -54,6 +52,7 @@ function updateLootUI() {
 
 // Auto loot function
 function autoLoot() {
-    collectedLoot = [];
-    generateLoot(document.getElementById("enemy-name").textContent.split("[")[0].trim());
+    gameState.setLoot([]);
+    const enemyLabel = document.getElementById("enemy-name").textContent.split("[")[0].replace("Currently Battling:", "").trim();
+    generateLoot(enemyLabel);
 }
